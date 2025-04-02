@@ -17,7 +17,7 @@ function Experience() {
 	// Initialize the game on component mount
 	useEffect(() => {
 		initializeGame();
-	}, []);
+	}, [initializeGame]);
 
 	const initializeGame = () => {
 		// Create a grid with the words hidden in it
