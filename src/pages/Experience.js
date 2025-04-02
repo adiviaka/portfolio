@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { colors } from "../App";
-import React, { useCallback } from "react";
 
 function Experience() {
 	// State to track which experience type is active
