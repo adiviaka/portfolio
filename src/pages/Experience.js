@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { colors } from "../App";
 
 function Experience() {
@@ -16,9 +15,7 @@ function Experience() {
 	const [gameComplete, setGameComplete] = useState(false);
 
 	// Initialize the game on component mount
-	useEffect(() => {
-		initializeGame();
-	}, []);
+	useEffect(() => {}, [initializeGame]);
 
 	const initializeGame = () => {
 		// Create a grid with the words hidden in it
@@ -109,7 +106,6 @@ function Experience() {
 
 		// If cell is part of a word, select the entire word
 		if (cell.wordIndex !== null) {
-			const wordToSelect = words[cell.wordIndex].word;
 			const wordCells = [];
 
 			// Find all cells that belong to this word
