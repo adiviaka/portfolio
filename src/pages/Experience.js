@@ -14,12 +14,7 @@ function Experience() {
 	const [selectedCells, setSelectedCells] = useState([]);
 	const [gameComplete, setGameComplete] = useState(false);
 
-	// Initialize the game on component mount
-	useEffect(() => {
-		initializeGame();
-	}, [initializeGame]);
-
-	const initializeGame = () => {
+	const initializeGame = useCallback(() => {
 		// Create a grid with the words hidden in it
 		const gridSize = 15;
 		const newGrid = createGrid(gridSize, gridSize);
@@ -33,7 +28,12 @@ function Experience() {
 			{ word: "ORGANIZATIONAL", found: false, color: colors.darkGreen },
 			{ word: "VOLUNTEER", found: false, color: colors.pink },
 		]);
-	};
+	}, []);
+
+	// Initialize the game on component mount
+	useEffect(() => {
+		initializeGame();
+	}, [initializeGame]);
 
 	const createGrid = (rows, cols) => {
 		// Initialize empty grid
