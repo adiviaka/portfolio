@@ -8,6 +8,7 @@ import Skills from "./pages/Skills";
 import Experience from "./pages/Experience";
 import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
+import Hero from "./pages/Hero";
 import "./fontawesome"; // Adjust if needed
 
 // Lily-inspired color palette
