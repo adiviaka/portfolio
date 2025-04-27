@@ -145,7 +145,7 @@ function Home() {
 								}}
 							>
 								<img
-									src="/api/placeholder/500/500"
+									src="icon adivia-1.jpg"
 									alt="Adivia Khusnul Aisha"
 									className="w-full h-full object-cover rounded-full p-2"
 								/>
