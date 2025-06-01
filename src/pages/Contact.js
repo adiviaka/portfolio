@@ -10,6 +10,7 @@ import {
 	faCheck,
 	faExclamationTriangle,
 } from "@fortawesome/free-solid-svg-icons";
+import emailjs from "@emailjs/browser";
 
 function Contact() {
 	const [formData, setFormData] = useState({
@@ -78,14 +79,14 @@ function Contact() {
 		}
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		if (!validateForm()) {
 			return;
 		}
 
-		// Simulate form submission with a delay
+		// Show loading state
 		setFormStatus({
 			submitted: true,
 			success: false,
@@ -93,20 +94,44 @@ function Contact() {
 			message: "Sending your message...",
 		});
 
-		// Simulate a network request
-		setTimeout(() => {
-			// Success simulation (in a real app, this would be an API call result)
+		try {
+			// EmailJS configuration - you'll need to replace these with your actual values
+			const serviceID = "service_n1zu639"; // Replace with your EmailJS service ID
+			const templateID = "template_w6o1pj7"; // Replace with your EmailJS template ID
+			const publicKey = "wwLvdmkjGPjx6vKhq"; // Replace with your EmailJS public key
+
+			// Template parameters that will be sent to your email template
+			const templateParams = {
+				from_name: formData.name,
+				from_email: formData.email,
+				subject: formData.subject || "Contact Form Submission",
+				message: formData.message,
+				to_name: "Adivia", // Your name
+			};
+
+			// Send email using EmailJS
+			const result = await emailjs.send(
+				serviceID,
+				templateID,
+				templateParams,
+				publicKey
+			);
+
+			console.log("Email sent successfully:", result);
+
+			// Success state
 			setFormStatus({
 				submitted: true,
 				success: true,
 				error: false,
-				message: "Your message has been sent! I'll get back to you soon.",
+				message:
+					"Your message has been sent successfully! I'll get back to you soon.",
 			});
 
 			// Reset form after successful submission
 			setFormData({ name: "", email: "", subject: "", message: "" });
 
-			// Reset status after a delay
+			// Reset status after 5 seconds
 			setTimeout(() => {
 				setFormStatus({
 					submitted: false,
@@ -115,7 +140,28 @@ function Contact() {
 					message: "",
 				});
 			}, 5000);
-		}, 1500);
+		} catch (error) {
+			console.error("Email sending failed:", error);
+
+			// Error state
+			setFormStatus({
+				submitted: true,
+				success: false,
+				error: true,
+				message:
+					"Failed to send message. Please try again or contact me directly at diva.adivia@gmail.com",
+			});
+
+			// Reset error status after 5 seconds
+			setTimeout(() => {
+				setFormStatus({
+					submitted: false,
+					success: false,
+					error: false,
+					message: "",
+				});
+			}, 5000);
+		}
 	};
 
 	const fadeInUp = {
@@ -150,7 +196,7 @@ function Contact() {
 						>
 							Get In Touch
 						</h2>
-						<p className="text-gray-600 mb-8">
+						<p className="text-gray-600 mb-8 text-lg">
 							I'm currently available for freelance work and job opportunities.
 							If you have a project that you want to get started, think you need
 							my help with something, or just want to say hello, feel free to
@@ -421,38 +467,6 @@ function Contact() {
 								)}
 							</motion.button>
 						</form>
-
-						{/* FAQ section */}
-						<motion.div
-							className="mt-12 pt-8 border-t"
-							style={{ borderColor: `${colors.lightGreen}30` }}
-							variants={fadeInUp}
-						>
-							<h3
-								className="text-xl font-semibold mb-4"
-								style={{ color: colors.darkRed }}
-							>
-								Frequently Asked Questions
-							</h3>
-
-							<div className="space-y-4">
-								<FAQ
-									question="What type of projects are you looking for?"
-									answer="I'm interested in backend development projects, particularly those involving PHP, Laravel, and MySQL. I enjoy building robust APIs and efficient database solutions."
-									colors={colors}
-								/>
-								<FAQ
-									question="What's your availability?"
-									answer="I'm currently available for part-time projects alongside my current roles. I typically respond to inquiries within 24 hours."
-									colors={colors}
-								/>
-								<FAQ
-									question="Do you work remotely?"
-									answer="Yes, I'm comfortable working remotely and have experience collaborating with distributed teams using various project management and communication tools."
-									colors={colors}
-								/>
-							</div>
-						</motion.div>
 					</motion.div>
 				</motion.div>
 			</div>
@@ -496,53 +510,6 @@ function ContactInfo({ icon, label, value, href }) {
 				</a>
 			</div>
 		</motion.div>
-	);
-}
-
-function FAQ({ question, answer, colors }) {
-	const [isOpen, setIsOpen] = useState(false);
-
-	return (
-		<div
-			className="border rounded-md overflow-hidden transition-all duration-200"
-			style={{
-				borderColor: isOpen ? colors.lightGreen : `${colors.lightGreen}30`,
-				backgroundColor: isOpen ? `${colors.lightGreen}05` : "transparent",
-			}}
-		>
-			<button
-				className="flex justify-between items-center w-full p-4 text-left"
-				onClick={() => setIsOpen(!isOpen)}
-				aria-expanded={isOpen}
-			>
-				<h4 className="font-medium text-sm" style={{ color: colors.darkRed }}>
-					{question}
-				</h4>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					className={`h-4 w-4 transition-transform duration-200 ${
-						isOpen ? "rotate-180" : ""
-					}`}
-					style={{ color: colors.darkGreen }}
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-				>
-					<path
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						strokeWidth={2}
-						d="M19 9l-7 7-7-7"
-					/>
-				</svg>
-			</button>
-
-			{isOpen && (
-				<div className="px-4 pb-4">
-					<p className="text-sm text-gray-600">{answer}</p>
-				</div>
-			)}
-		</div>
 	);
 }
 

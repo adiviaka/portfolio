@@ -20,9 +20,10 @@ function Hero() {
 
 	const phrases = [
 		"Backend Developer",
-		"API Designer",
-		"Database Engineer",
+		"Coding Teacher",
+		"Team Leader",
 		"Problem Solver",
+		"API Specialist",
 	];
 
 	useEffect(() => {
@@ -154,9 +155,11 @@ function Hero() {
 									animate={{ opacity: 1 }}
 									transition={{ delay: 0.4, duration: 0.6 }}
 								>
-									A passionate backend developer specializing in PHP, Laravel,
-									and MySQL. I create efficient, scalable solutions to solve
-									complex problems.
+									A versatile Computer Engineering graduate (GPA: 3.82)
+									combining technical expertise with teaching abilities.
+									Currently a Backend Developer at Awan Network Indonesia and
+									Coding Teacher at Timedoor Academy, creating efficient
+									solutions while empowering others.
 								</motion.p>
 
 								<motion.div
